@@ -1,73 +1,103 @@
+//#include <asf.h>
+//
+//#define PHASE_A_PIN        PIO_PB11_IDX
+//#define PHASE_A_PIN_MASK   PIO_PB11
+//
+//#define PHASE_B_PIN        PIO_PB13_IDX
+//#define PHASE_B_PIN_MASK   PIO_PB13
+//
+//#define LED_SENS_S_PIN     PIO_PB0_IDX
+//#define LED_SENS_S_MASK    PIO_PB0
+//
+//#define LED_SENS_I_PIN     PIO_PB1_IDX
+//#define LED_SENS_I_MASK    PIO_PB1
+//
+//static void configure_pins(void) {
+//pmc_enable_periph_clk(ID_PIOB);
+//
+//// Configurar PHASE_A y PHASE_B como entradas
+//pio_configure_pin(PHASE_A_PIN, PIO_INPUT | PIO_DEFAULT);
+//pio_configure_pin(PHASE_B_PIN, PIO_INPUT | PIO_DEFAULT);
+//
+//// Configurar LED_SENS_S y LED_SENS_I como salidas
+//pio_configure_pin(LED_SENS_S_PIN, PIO_OUTPUT_0 | PIO_DEFAULT);
+//pio_configure_pin(LED_SENS_I_PIN, PIO_OUTPUT_0 | PIO_DEFAULT);
+//}
+//
+//int main(void) {
+//sysclk_init();
+//board_init();
+//configure_pins();
+//
+//while (1) {
+//uint8_t phase_a = pio_get(PIOB, PIO_INPUT, PHASE_A_PIN_MASK);
+//uint8_t phase_b = pio_get(PIOB, PIO_INPUT, PHASE_B_PIN_MASK);
+//
+//// LED_SENS_S reacciona a PHASE_B
+//if (phase_b) {
+//pio_set(PIOB, LED_SENS_S_MASK);
+//} else {
+//pio_clear(PIOB, LED_SENS_S_MASK);
+//}
+//
+//// LED_SENS_I reacciona a PHASE_A
+//if (phase_a) {
+//pio_set(PIOB, LED_SENS_I_MASK);
+//} else {
+//pio_clear(PIOB, LED_SENS_I_MASK);
+//}
+//
+//delay_ms(10);  // Pequeño retardo para evitar rebotes
+//}
+//}
+//
+//
 #include <asf.h>
 
-#define PHASE_A_PIN PIO_PB11_IDX
-#define PHASE_B_PIN PIO_PB13_IDX
-#define INDEX_PIN   PIO_PB14_IDX  // Pin para la señal de confirmación
+void configure_led(void);
+void pin_interrupt_handler(const uint32_t id, const uint32_t mask);
 
-volatile int position = 0;
-volatile uint8_t last_state = 0;
-volatile bool giroEnProgreso = false;
-volatile bool giroCompletado = false;
-
-// Prototipo de la función de manejo de cambios de fase
-void handle_phase_change(const uint32_t id, const uint32_t mask);
-
-void configure_pins(void) {
-	pio_configure_pin(PHASE_A_PIN, PIO_INPUT | PIO_PULLUP);
-	pio_configure_pin(PHASE_B_PIN, PIO_INPUT | PIO_PULLUP);
-	pio_configure_pin(INDEX_PIN, PIO_INPUT | PIO_PULLUP);
-
-	pio_handler_set(PIOB, ID_PIOB, PHASE_A_PIN | PHASE_B_PIN | INDEX_PIN, PIO_IT_EDGE, handle_phase_change);
-	pio_enable_interrupt(PIOB, PHASE_A_PIN | PHASE_B_PIN | INDEX_PIN);
-	NVIC_EnableIRQ(PIOB_IRQn);
-}
-
-void handle_phase_change(const uint32_t id, const uint32_t mask) {
-	if (id == ID_PIOB) {
-		uint8_t new_state = (pio_get(PIOB, PIO_TYPE_PIO_INPUT, PHASE_A_PIN) ? 1 : 0) |
-		(pio_get(PIOB, PIO_TYPE_PIO_INPUT, PHASE_B_PIN) ? 2 : 0);
-
-		if (new_state != last_state) {
-			if ((last_state == 0b01 && new_state == 0b11) ||
-			(last_state == 0b11 && new_state == 0b10) ||
-			(last_state == 0b10 && new_state == 0b00) ||
-			(last_state == 0b00 && new_state == 0b01)) {
-				position++;
-			} else if ((last_state == 0b01 && new_state == 0b00) ||
-			(last_state == 0b00 && new_state == 0b10) ||
-			(last_state == 0b10 && new_state == 0b11) ||
-			(last_state == 0b11 && new_state == 0b01)) {
-				position--;
-			}
-			last_state = new_state;
-			giroEnProgreso = true;
-		}
-
-		if (mask & (1 << INDEX_PIN)) {
-			if (giroEnProgreso && !giroCompletado) {
-				giroCompletado = true;
-				} else {
-				position = 0;
-				giroEnProgreso = false;
-				giroCompletado = false;
-			}
+// Handler que será llamado cuando ocurra la interrupción
+void pin_interrupt_handler(const uint32_t id, const uint32_t mask) {
+	if (id == ID_PIOB && (mask & PIO_PB11)) {
+		if (pio_get(PIOB,PIO_INPUT,PIO_PB11)){
+			pio_set(PIOB,PIO_PB0);
+			} else {
+			pio_clear(PIOB,PIO_PB0);
 		}
 	}
+	if (id == ID_PIOB && (mask & PIO_PB13)) {
+		if (pio_get(PIOB,PIO_INPUT,PIO_PB13)){
+			pio_set(PIOB,PIO_PB1);
+			} else {
+			pio_clear(PIOB,PIO_PB1);
+		}
+	}
+}
+
+void configure_led(void) {
+	// Activar el reloj del periférico PIOB
+	pmc_enable_periph_clk(ID_PIOB);
+
+	// Salidas GPIO
+	pio_configure(PIOB, PIO_OUTPUT_0, PIO_PB0|PIO_PB1 , PIO_DEFAULT);
+	
+	// Entrada GPIO
+	pio_configure(PIOB,PIO_INPUT,PIO_PB11|PIO_PB13,PIO_DEFAULT);
+	pio_configure_interrupt(PIOB, PIO_PB11|PIO_PB13, PIO_IT_EDGE);
+	pio_handler_set(PIOB, ID_PIOB, PIO_PB11|PIO_PB13, PIO_IT_EDGE, pin_interrupt_handler);
+	
+	// Habilitar la interrupción en el periférico y en el NVIC
+	pio_enable_interrupt(PIOB, PIO_PB11|PIO_PB13);
+	NVIC_EnableIRQ(PIOB_IRQn);
 }
 
 int main(void) {
 	sysclk_init();
 	board_init();
-	configure_pins();
-
-	while (1) {
-		// Implementa cualquier otra lógica de supervisión necesaria
+	configure_led();
+	
+	while (1){
+		
 	}
-
-	//return 1;
 }
-
-//void PIOB_Handler(void) {
-	//uint32_t status = pio_get_interrupt_status(PIOB);
-	//handle_phase_change(ID_PIOB, status);
-//}
