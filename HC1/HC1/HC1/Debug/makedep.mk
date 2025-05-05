@@ -12,10 +12,6 @@ src\ASF\common\utils\stdio\read.c
 
 src\ASF\common\utils\stdio\write.c
 
-src\ASF\sam\drivers\adc\adc.c
-
-src\ASF\sam\drivers\adc\adc_sam3u.c
-
 src\ASF\sam\drivers\efc\efc.c
 
 src\ASF\sam\drivers\matrix\matrix.c

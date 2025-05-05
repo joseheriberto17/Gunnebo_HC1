@@ -1,8 +1,7 @@
 src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.d \
  src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.o: \
  ../src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.c \
- ../src/asf.h ../src/ASF/sam/drivers/adc/adc.h \
- ../src/ASF/sam/utils/compiler.h \
+ ../src/asf.h ../src/ASF/sam/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stddef.h \
  ../src/ASF/common/utils/parts.h \
  ../src/ASF/sam/utils/preprocessor/preprocessor.h \
@@ -138,8 +137,6 @@ src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.d \
  ../src/config/conf_sio2host.h
 
 ../src/asf.h:
-
-../src/ASF/sam/drivers/adc/adc.h:
 
 ../src/ASF/sam/utils/compiler.h:
 

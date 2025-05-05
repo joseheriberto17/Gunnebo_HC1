@@ -36,12 +36,12 @@
           <option id="common.services.basic.gpio" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.services.basic.serial" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.utils.stdio.stdio_serial" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="sam.drivers.adc" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.matrix" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.pdc" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam.drivers.pio" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam.drivers.pwm" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.services.flash" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.addons.sio2host" value="Add" config="uart" content-id="Atmel.ASF" />
-          <option id="sam.drivers.pwm" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.utils.linker_scripts#atsam3s1" value="Add" config="" content-id="Atmel.ASF" />
         </options>
         <configurations>
@@ -205,9 +205,6 @@
           <file path="src/ASF/sam/drivers/efc/efc.h" framework="" version="3.52.0" source="sam\drivers\efc\efc.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/services/flash_efc/flash_efc.c" framework="" version="3.52.0" source="sam\services\flash_efc\flash_efc.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/services/flash_efc/flash_efc.h" framework="" version="3.52.0" source="sam\services\flash_efc\flash_efc.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam/drivers/adc/adc_sam3u.c" framework="" version="3.52.0" source="sam\drivers\adc\adc_sam3u.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam/drivers/adc/adc.c" framework="" version="3.52.0" source="sam\drivers\adc\adc.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam/drivers/adc/adc.h" framework="" version="3.52.0" source="sam\drivers\adc\adc.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/pdc/pdc.c" framework="" version="3.52.0" source="sam\drivers\pdc\pdc.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/pdc/pdc.h" framework="" version="3.52.0" source="sam\drivers\pdc\pdc.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/pdc/pdc_uart_example/pdc_uart_example.h" framework="" version="3.52.0" source="sam\drivers\pdc\pdc_uart_example\pdc_uart_example.h" changed="False" content-id="Atmel.ASF" />
@@ -241,6 +238,7 @@
           </JtagDaisyChainDevices>
         </InterfaceProperties>
         <InterfaceName>JTAG</InterfaceName>
+        <JlinkConfigFile>C:\Users\GESTION_LABORATORIO\Documents\Repositorios_git\Gunnebo_HC1\HC1\HC1\HC1\jlink.config</JlinkConfigFile>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.samice</ToolType>
       <ToolNumber>28011418</ToolNumber>
@@ -295,7 +293,6 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/efc</Value>
       <Value>../src/ASF/sam/services/flash_efc</Value>
-      <Value>../src/ASF/sam/drivers/adc</Value>
       <Value>../src/ASF/sam/drivers/pdc</Value>
       <Value>../src/ASF/sam/drivers/pdc/pdc_uart_example</Value>
       <Value>../src/ASF/sam/drivers/pwm</Value>
@@ -348,7 +345,6 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/efc</Value>
       <Value>../src/ASF/sam/services/flash_efc</Value>
-      <Value>../src/ASF/sam/drivers/adc</Value>
       <Value>../src/ASF/sam/drivers/pdc</Value>
       <Value>../src/ASF/sam/drivers/pdc/pdc_uart_example</Value>
       <Value>../src/ASF/sam/drivers/pwm</Value>
@@ -383,7 +379,6 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/efc</Value>
       <Value>../src/ASF/sam/services/flash_efc</Value>
-      <Value>../src/ASF/sam/drivers/adc</Value>
       <Value>../src/ASF/sam/drivers/pdc</Value>
       <Value>../src/ASF/sam/drivers/pdc/pdc_uart_example</Value>
       <Value>../src/ASF/sam/drivers/pwm</Value>
@@ -438,7 +433,6 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/efc</Value>
       <Value>../src/ASF/sam/services/flash_efc</Value>
-      <Value>../src/ASF/sam/drivers/adc</Value>
       <Value>../src/ASF/sam/drivers/pdc</Value>
       <Value>../src/ASF/sam/drivers/pdc/pdc_uart_example</Value>
       <Value>../src/ASF/sam/drivers/pwm</Value>
@@ -492,7 +486,6 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/efc</Value>
       <Value>../src/ASF/sam/services/flash_efc</Value>
-      <Value>../src/ASF/sam/drivers/adc</Value>
       <Value>../src/ASF/sam/drivers/pdc</Value>
       <Value>../src/ASF/sam/drivers/pdc/pdc_uart_example</Value>
       <Value>../src/ASF/sam/drivers/pwm</Value>
@@ -528,7 +521,6 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/efc</Value>
       <Value>../src/ASF/sam/services/flash_efc</Value>
-      <Value>../src/ASF/sam/drivers/adc</Value>
       <Value>../src/ASF/sam/drivers/pdc</Value>
       <Value>../src/ASF/sam/drivers/pdc/pdc_uart_example</Value>
       <Value>../src/ASF/sam/drivers/pwm</Value>
@@ -559,7 +551,6 @@
     <Folder Include="src\ASF\common\utils\stdio\stdio_serial\" />
     <Folder Include="src\ASF\sam\" />
     <Folder Include="src\ASF\sam\drivers\" />
-    <Folder Include="src\ASF\sam\drivers\adc\" />
     <Folder Include="src\ASF\sam\drivers\efc\" />
     <Folder Include="src\ASF\sam\drivers\matrix\" />
     <Folder Include="src\ASF\sam\drivers\pdc\" />
@@ -660,15 +651,6 @@
       <SubType>compile</SubType>
     </None>
     <Compile Include="src\ASF\common\utils\stdio\write.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ASF\sam\drivers\adc\adc.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\sam\drivers\adc\adc.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\sam\drivers\adc\adc_sam3u.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\ASF\sam\drivers\efc\efc.c">

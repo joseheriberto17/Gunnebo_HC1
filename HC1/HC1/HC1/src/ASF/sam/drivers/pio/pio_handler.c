@@ -216,7 +216,7 @@ void PIOA_Handler(void)
  */
 void PIOB_Handler(void)
 {
-    pio_handler_process(PIOB, ID_PIOB);
+	pio_handler_process(PIOB, ID_PIOB);
 }
 #endif
 
